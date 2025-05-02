@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import "dotenv/config";
 
 const app = express();
@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
-app.get("/ping", (req, res) => {
+app.get("/ping", (req: Request, res: Response) => {
   res.json({ message: "pong" });
 });
 

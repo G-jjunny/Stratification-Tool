@@ -8,6 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
+RUN npm install --save-dev @types/express @types/node
+
 # 4. 소스 복사
 COPY . .
 

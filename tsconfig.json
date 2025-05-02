@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2016",
+    "lib": ["es2018"],
     "module": "commonjs",
     "rootDir": "./", // rootDir을 루트로 변경
     "outDir": "./dist",
