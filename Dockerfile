@@ -6,7 +6,7 @@ WORKDIR /app
 
 # 3. package.json 복사 및 의존성 설치
 COPY package*.json ./
-RUN npm install --production
+RUN npm install
 
 # 4. 소스 복사
 COPY . .
