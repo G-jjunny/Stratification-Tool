@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import "dotenv/config";
+import authRouter from "./routes/auth";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -13,6 +14,9 @@ app.get("/ping", (req: Request, res: Response) => {
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });
+
+// login api
+app.use("/", authRouter);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
