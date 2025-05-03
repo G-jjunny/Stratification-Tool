@@ -19,5 +19,7 @@ RUN npx prisma generate
 # 6. 빌드
 RUN npm run build
 
+RUN npx prisma db seed
+
 # 7. 실행
 CMD ["npm", "start"]
