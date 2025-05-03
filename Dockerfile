@@ -19,7 +19,13 @@ RUN npx prisma generate
 # 6. 빌드
 RUN npm run build
 
-RUN npx prisma db seed
+# RUN npx prisma db seed
+
+# 실행 스크립트 복사 및 권한 부여
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 # 7. 실행
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
+# 앱 시작 전 entrypoint 실행
+CMD ["sh", "/app/entrypoint.sh"]
