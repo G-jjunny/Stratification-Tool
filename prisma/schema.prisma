@@ -33,3 +33,16 @@ enum Role {
   ADMIN
   USER
 }
+
+model PatientData {
+  id String @unique @default(uuid())
+  isReceived String
+  patientId String @default(uuid())
+  patientName String 
+  isMale  String 
+  birthday String 
+  operationDate String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
