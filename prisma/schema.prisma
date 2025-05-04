@@ -42,7 +42,7 @@ model PatientData {
   isMale  String 
   birthday String 
   operationDate String
-
+  institution String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
