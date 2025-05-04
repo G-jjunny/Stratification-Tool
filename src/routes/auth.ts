@@ -23,6 +23,7 @@ router.post("/login", async (req: Request, res: Response) => {
         id: user.id,
         accountId: user.accountId,
         role: user.role,
+        institution: user.institution,
       },
     });
   } catch (error) {
