@@ -19,15 +19,8 @@ model User {
   accountId     String   @unique
   password     String
   role         Role
-  // institution  Institution? @relation(fields: [institutionId], references: [id])
   institution  String
-  // institutionId Int?
 }
-// model Institution {
-//   id    Int     @id @default(autoincrement())
-//   name  String  
-//   users User[]
-// }
 
 enum Role {
   ADMIN

@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const client_1 = require("@prisma/client");
+const bcryptjs_1 = __importDefault(require("bcryptjs")); // bcryptjs import
 const router = (0, express_1.Router)();
 const prisma = new client_1.PrismaClient();
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -19,8 +23,16 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const user = yield prisma.user.findUnique({
             where: { accountId },
         });
-        if (!user || user.password !== password) {
-            return res.status(401).json({ message: "Invalid email or password" });
+        if (!user) {
+            return res
+                .status(401)
+                .json({ message: "Invalid account ID or password" });
+        }
+        const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res
+                .status(401)
+                .json({ message: "Invalid account ID or password" });
         }
         // 로그인 성공
         res.status(200).json({
