@@ -1,5 +1,6 @@
 import express, { Router, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs"; // bcryptjs import
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -12,8 +13,17 @@ router.post("/login", async (req: Request, res: Response) => {
       where: { accountId },
     });
 
-    if (!user || user.password !== password) {
-      return res.status(401).json({ message: "Invalid email or password" });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "Invalid account ID or password" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ message: "Invalid account ID or password" });
     }
 
     // 로그인 성공
