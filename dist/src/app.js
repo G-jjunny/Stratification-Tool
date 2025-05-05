@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require("dotenv/config");
 const auth_1 = __importDefault(require("./routes/auth"));
+const register_1 = __importDefault(require("./routes/register"));
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 4000;
 app.use(express_1.default.json());
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 // login api
 app.use("/", auth_1.default);
+app.use("/", register_1.default);
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 });

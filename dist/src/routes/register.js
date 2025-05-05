@@ -11,31 +11,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const client_1 = require("@prisma/client");
-const router = (0, express_1.Router)();
 const prisma = new client_1.PrismaClient();
-router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { accountId, password } = req.body;
+const router = (0, express_1.Router)();
+router.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { isReceived, patientId, patientName, isMale, institution, birthday, operationDate, } = req.body;
     try {
-        const user = yield prisma.user.findUnique({
-            where: { accountId },
-        });
-        if (!user || user.password !== password) {
-            return res.status(401).json({ message: "Invalid email or password" });
-        }
-        // 로그인 성공
-        res.status(200).json({
-            message: "Login successful",
-            user: {
-                id: user.id,
-                accountId: user.accountId,
-                role: user.role,
-                institution: user.institution,
+        const newPatient = yield prisma.patientData.create({
+            data: {
+                isReceived,
+                patientId,
+                patientName,
+                isMale,
+                institution,
+                birthday,
+                operationDate,
             },
+        });
+        return res.status(201).json({
+            message: "Patient data registered successfully",
+            patient: newPatient,
         });
     }
     catch (error) {
-        console.error("Login error:", error);
-        res.status(500).json({ message: "Internal server error" });
+        console.error("Error registering patient:", error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 }));
 exports.default = router;
