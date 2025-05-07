@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import authRouter from "./routes/auth";
 import registerRouter from "./routes/register";
+import patientRouter from "./routes/patient";
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -34,9 +35,9 @@ app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 
-// login api
-app.use("/", authRouter);
-app.use("/", registerRouter);
+app.use("/", authRouter); // login api
+app.use("/", registerRouter); // register api
+app.use("/", patientRouter); // patient data api
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
