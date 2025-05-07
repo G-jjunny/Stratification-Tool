@@ -1,11 +1,9 @@
-import { Router, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-import prisma from "../../prisma/client";
+import { Router } from "express";
 import {
   deletePatient,
   registerPatient,
   updatePatient,
-} from "../controllers/patient.controller";
+} from "../controllers/register.controller";
 
 const router = Router();
 
