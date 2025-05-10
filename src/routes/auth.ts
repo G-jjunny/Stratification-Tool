@@ -13,16 +13,22 @@ router.post("/login", async (req: Request, res: Response) => {
     });
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: "Invalid account ID or password" });
+      return res.status(401).json({
+        message: "Invalid account ID or password",
+        state: false,
+        code: 401,
+      });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res
         .status(401)
-        .json({ message: "Invalid account ID or password" });
+        .json({
+          message: "Invalid account ID or password",
+          state: false,
+          code: 401,
+        });
     }
 
     // 로그인 성공
