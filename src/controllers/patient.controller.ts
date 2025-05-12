@@ -35,9 +35,9 @@ export const patchDropPatients = async (req: Request, res: Response) => {
       data: { droped: true },
     });
 
-    return res.status(200).json({ message: "Saved" });
+    return res.status(200).json({ message: "Patients marked as dropped" });
   } catch (err) {
     console.error("Drop error:", err);
-    return res.status(500).json({ message: "서버 오류" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

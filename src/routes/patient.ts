@@ -10,6 +10,6 @@ const router = Router();
 
 router.get("/patient", getPatientAll);
 router.get("/patient/:institution", getPatient);
-router.patch("patient/drop", patchDropPatients);
+router.patch("/patient/drop", patchDropPatients);
 
 export default router;
