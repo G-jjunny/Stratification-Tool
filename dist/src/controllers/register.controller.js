@@ -15,14 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePatient = exports.updatePatient = exports.registerPatient = void 0;
 const client_1 = __importDefault(require("../../prisma/client"));
 const registerPatient = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { isReceived, patientId, patientName, isMale, institution, birthday, operationDate, } = req.body;
+    const { isReceived, patientId, patientName, isMale, group, droped, institution, birthday, operationDate, } = req.body;
     try {
         const newPatient = yield client_1.default.patientData.create({
             data: {
                 isReceived,
                 patientId,
                 patientName,
+                group,
                 isMale,
+                droped,
                 institution,
                 birthday,
                 operationDate,
@@ -42,7 +44,7 @@ exports.registerPatient = registerPatient;
 // 수정
 const updatePatient = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { isReceived, patientId, patientName, isMale, institution, birthday, operationDate, } = req.body;
+    const { isReceived, patientId, patientName, isMale, droped, group, institution, birthday, operationDate, } = req.body;
     try {
         const updatedPatient = yield client_1.default.patientData.update({
             where: { id: id },
@@ -50,6 +52,8 @@ const updatePatient = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 isReceived,
                 patientId,
                 patientName,
+                droped,
+                group,
                 isMale,
                 institution,
                 birthday,

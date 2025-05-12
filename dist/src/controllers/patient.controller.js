@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPatient = exports.getPatientAll = void 0;
+exports.patchDropPatients = exports.getPatient = exports.getPatientAll = void 0;
 const client_1 = __importDefault(require("../../prisma/client"));
 const getPatientAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -39,3 +39,18 @@ const getPatient = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getPatient = getPatient;
+const patchDropPatients = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { ids } = req.body;
+    try {
+        yield client_1.default.patientData.updateMany({
+            where: { id: { in: ids } },
+            data: { droped: true },
+        });
+        return res.status(200).json({ message: "Patients marked as dropped" });
+    }
+    catch (err) {
+        console.error("Drop error:", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.patchDropPatients = patchDropPatients;

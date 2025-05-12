@@ -23,15 +23,21 @@ router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* 
             where: { accountId },
         });
         if (!user) {
-            return res
-                .status(401)
-                .json({ message: "Invalid account ID or password", state: false });
+            return res.status(401).json({
+                message: "Invalid account ID or password",
+                state: false,
+                code: 401,
+            });
         }
         const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
         if (!isPasswordValid) {
             return res
                 .status(401)
-                .json({ message: "Invalid account ID or password", state: false });
+                .json({
+                message: "Invalid account ID or password",
+                state: false,
+                code: 401,
+            });
         }
         // 로그인 성공
         res.status(200).json({
