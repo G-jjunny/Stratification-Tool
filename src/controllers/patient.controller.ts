@@ -26,7 +26,7 @@ export const getPatient = async (req: Request, res: Response) => {
   }
 };
 
-export const dropPatients = async (req: Request, res: Response) => {
+export const patchDropPatients = async (req: Request, res: Response) => {
   const { ids } = req.body;
 
   try {
