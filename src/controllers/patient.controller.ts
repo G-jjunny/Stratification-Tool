@@ -67,10 +67,11 @@ export const downloadPatientsExcel = async (req: Request, res: Response) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Patients");
 
     // 버퍼 생성
-    const buffer = XLSX.write(workbook, {
+    const binaryExcel = XLSX.write(workbook, {
       type: "buffer",
       bookType: "xlsx",
     });
+    const buffer = Buffer.from(binaryExcel, "binary");
 
     // 응답 헤더 설정
     res.setHeader("Content-Disposition", "attachment; filename=patients.xlsx");
@@ -79,7 +80,7 @@ export const downloadPatientsExcel = async (req: Request, res: Response) => {
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
 
-    return res.send(buffer);
+    return res.end(buffer);
   } catch (error) {
     console.error("Excel download error:", error);
     return res.status(500).json({ message: "엑셀 다운로드 실패", error });
