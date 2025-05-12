@@ -67,7 +67,10 @@ export const downloadPatientsExcel = async (req: Request, res: Response) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Patients");
 
     // 버퍼 생성
-    const buffer = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
+    const buffer = XLSX.write(workbook, {
+      type: "buffer",
+      bookType: "xlsx",
+    });
 
     // 응답 헤더 설정
     res.setHeader("Content-Disposition", "attachment; filename=patients.xlsx");
