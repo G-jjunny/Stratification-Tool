@@ -31,7 +31,7 @@ export const patchDropPatients = async (req: Request, res: Response) => {
 
   try {
     await prisma.patientData.updateMany({
-      where: { id: { in: ids } },
+      where: { patientId: { in: ids } },
       data: { droped: true },
     });
 
