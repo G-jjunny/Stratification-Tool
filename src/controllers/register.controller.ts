@@ -57,7 +57,7 @@ export const updatePatient = async (req: Request, res: Response) => {
 
   try {
     const updatedPatient = await prisma.patientData.update({
-      where: { id: id },
+      where: { patientId: id },
       data: {
         isReceived,
         patientId,
