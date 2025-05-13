@@ -33,24 +33,24 @@ export const patchDropPatients = async (req: Request, res: Response) => {
   const { ids } = req.body;
 
   try {
-    await prisma.patientData.updateMany({
-      where: { patientId: { in: ids } },
-      data: { droped: true },
-    });
-
-    // for (const id of ids) {
-    //   const patient = await prisma.patientData.findUnique({
-    //     where: { patientId: id },
-    //     select: { droped: true },
+    //   await prisma.patientData.updateMany({
+    //     where: { patientId: { in: ids } },
+    //     data: { droped: true },
     //   });
 
-    //   if (patient) {
-    //     await prisma.patientData.update({
-    //       where: { patientId: id },
-    //       data: { droped: !patient.droped },
-    //     });
-    //   }
-    // }
+    for (const id of ids) {
+      const patient = await prisma.patientData.findUnique({
+        where: { patientId: id },
+        select: { droped: true },
+      });
+
+      if (patient) {
+        await prisma.patientData.update({
+          where: { patientId: id },
+          data: { droped: !patient.droped },
+        });
+      }
+    }
 
     return res.status(200).json({ message: "Patients marked as dropped" });
   } catch (err) {
