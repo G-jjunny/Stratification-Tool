@@ -30,7 +30,7 @@ enum Role {
 model PatientData {
   id String @unique @default(uuid())
   isReceived String
-  patientId String @default(uuid())
+  patientId String @unique @default(uuid())
   patientName String 
   isMale  String 
   birthday String 
