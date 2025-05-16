@@ -41,3 +41,16 @@ model PatientData {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
+
+model NeoY {
+  id Int @id @default(autoincrement())
+  serialNum String 
+  Neo String
+  group String
+}
+model NeoN {
+  id Int @id @default(autoincrement())
+  serialNum String 
+  Neo String
+  group String
+}

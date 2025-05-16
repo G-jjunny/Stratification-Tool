@@ -1,94 +1,50 @@
 import { PrismaClient, Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
+import fs from "fs";
+import path from "path";
+import * as XLSX from "xlsx";
+import { users } from "./user";
+import prisma from "./client";
+import { neoadjFromExcel } from "./neoadjFromExcel";
 
 async function main() {
   // 기존 유저 데이터 삭제
   await prisma.user.deleteMany();
+  await prisma.neoY.deleteMany();
+  await prisma.neoN.deleteMany();
 
-  // 사용자 목록 생성
-  const users = [
-    {
-      institution: "SMC",
-      accountId: "admin",
-      password: "smc12345",
-      role: Role.ADMIN,
-    },
-    {
-      institution: "SMC",
-      accountId: "smc1",
-      password: "smc2472",
-      role: Role.USER,
-    },
-    {
-      institution: "SMC",
-      accountId: "smc2",
-      password: "smc6587",
-      role: Role.USER,
-    },
-    {
-      institution: "SMC",
-      accountId: "smc3",
-      password: "smc0369",
-      role: Role.USER,
-    },
-    {
-      institution: "NCCE",
-      accountId: "ncce1",
-      password: "ncce483",
-      role: Role.USER,
-    },
-    {
-      institution: "NCCE",
-      accountId: "ncce2",
-      password: "ncce990",
-      role: Role.USER,
-    },
-    {
-      institution: "NCCE",
-      accountId: "ncce3",
-      password: "ncce481",
-      role: Role.USER,
-    },
-    {
-      institution: "Juntendo",
-      accountId: "juntendo1",
-      password: "juntendo474",
-      role: Role.USER,
-    },
-    {
-      institution: "Juntendo",
-      accountId: "juntendo2",
-      password: "juntendo368",
-      role: Role.USER,
-    },
-    {
-      institution: "Juntendo",
-      accountId: "juntendo3",
-      password: "juntendo482",
-      role: Role.USER,
-    },
-    {
-      institution: "Okayama",
-      accountId: "okayama1",
-      password: "okayama832",
-      role: Role.USER,
-    },
-    {
-      institution: "Okayama",
-      accountId: "okayama2",
-      password: "okayama809",
-      role: Role.USER,
-    },
-    {
-      institution: "Okayama",
-      accountId: "okayama3",
-      password: "okayama781",
-      role: Role.USER,
-    },
-  ];
+  // 엑셀 데이터 삽입
+  await neoadjFromExcel("NeoY.xlsx", "neoY");
+  await neoadjFromExcel("NeoN.xlsx", "neoN");
 
+  // Excel 파일 경로
+  // const NeoYPath = path.resolve(process.cwd(), "xlsx", "NeoY.xlsx");
+  // // const NeoNPath = path.resolve(__dirname, "./NeoN.xlsx");
+
+  // // 엑셀 파일 읽기
+  // const buffer = fs.readFileSync(NeoYPath);
+  // const workbook = XLSX.read(buffer, { type: "buffer" });
+  // const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  // const data = XLSX.utils.sheet_to_json(sheet);
+
+  // // 데이터 삽입
+  // for (const row of data) {
+  //   const { serial, neoadj, group } = row as {
+  //     serial: string;
+  //     neoadj: string;
+  //     group: string;
+  //   };
+
+  //   await prisma.neoY.create({
+  //     data: {
+  //       serialNum: serial,
+  //       Neo: neoadj,
+  //       group: group,
+  //     },
+  //   });
+  // }
+
+  // 기본 유저 생성
   for (const user of users) {
     const hashedPassword = await bcrypt.hash(user.password, 10); // 🔐 비밀번호 해싱
     await prisma.user.create({

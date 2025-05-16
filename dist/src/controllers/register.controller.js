@@ -47,14 +47,14 @@ const updatePatient = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const { isReceived, patientId, patientName, isMale, droped, group, institution, birthday, operationDate, } = req.body;
     try {
         const updatedPatient = yield client_1.default.patientData.update({
-            where: { id: id },
+            where: { patientId: id },
             data: {
                 isReceived,
                 patientId,
                 patientName,
+                isMale,
                 droped,
                 group,
-                isMale,
                 institution,
                 birthday,
                 operationDate,
@@ -76,7 +76,7 @@ const deletePatient = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const { id } = req.params;
     try {
         yield client_1.default.patientData.delete({
-            where: { id: id },
+            where: { patientId: id },
         });
         return res.status(200).json({ message: "Patient deleted successfully" });
     }
