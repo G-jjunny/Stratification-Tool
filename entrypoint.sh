@@ -9,8 +9,8 @@ echo "📂 Applying migrations..."
 npx prisma migrate deploy
 
 # Seed 데이터 삽입
-echo "🌱 Running seed script..."
-npx prisma db seed
+# echo "🌱 Running seed script..."
+# npx prisma db seed
 
 # 서버 실행
 echo "🚀 Starting the server..."
