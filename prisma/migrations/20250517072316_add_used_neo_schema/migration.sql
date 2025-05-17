@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "NeoN" ADD COLUMN     "used" BOOLEAN NOT NULL DEFAULT false;
+
+-- AlterTable
+ALTER TABLE "NeoY" ADD COLUMN     "used" BOOLEAN NOT NULL DEFAULT false;

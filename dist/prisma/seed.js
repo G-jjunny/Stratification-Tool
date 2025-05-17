@@ -48,7 +48,6 @@ function main() {
         //     },
         //   });
         // }
-        console.log("✅ NeoY 테이블에 데이터가 성공적으로 삽입되었습니다.");
         // 기본 유저 생성
         for (const user of user_1.users) {
             const hashedPassword = yield bcryptjs_1.default.hash(user.password, 10); // 🔐 비밀번호 해싱

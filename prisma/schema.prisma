@@ -47,10 +47,12 @@ model NeoY {
   serialNum String 
   Neo String
   group String
+  used Boolean @default(false)
 }
 model NeoN {
   id Int @id @default(autoincrement())
   serialNum String 
   Neo String
   group String
+  used Boolean @default(false)
 }

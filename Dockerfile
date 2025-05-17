@@ -19,6 +19,9 @@ RUN npx prisma generate
 # 6. 빌드
 RUN npm run build
 
+# 6.5. 마이그레이션 적용 (배포용)
+RUN npx prisma migrate deploy
+
 # RUN npx prisma db seed
 
 # 실행 스크립트 복사 및 권한 부여

@@ -27,6 +27,7 @@ export const neoadjFromExcel = async (
       serialNum: serial,
       Neo: neoadj,
       group: group,
+      used: false,
     };
 
     if (model === "neoY") {
