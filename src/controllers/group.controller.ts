@@ -25,7 +25,11 @@ export const getGroup = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "No available group found" });
     }
 
-    return res.json({ id: group.id, group: group.group });
+    return res.json({
+      id: group.id,
+      group: group.group,
+      serial: group.serialNum,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Internal Server Error" });
