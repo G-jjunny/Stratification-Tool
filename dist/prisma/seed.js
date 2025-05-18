@@ -25,29 +25,6 @@ function main() {
         // 엑셀 데이터 삽입
         yield (0, neoadjFromExcel_1.neoadjFromExcel)("NeoY.xlsx", "neoY");
         yield (0, neoadjFromExcel_1.neoadjFromExcel)("NeoN.xlsx", "neoN");
-        // Excel 파일 경로
-        // const NeoYPath = path.resolve(process.cwd(), "xlsx", "NeoY.xlsx");
-        // // const NeoNPath = path.resolve(__dirname, "./NeoN.xlsx");
-        // // 엑셀 파일 읽기
-        // const buffer = fs.readFileSync(NeoYPath);
-        // const workbook = XLSX.read(buffer, { type: "buffer" });
-        // const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        // const data = XLSX.utils.sheet_to_json(sheet);
-        // // 데이터 삽입
-        // for (const row of data) {
-        //   const { serial, neoadj, group } = row as {
-        //     serial: string;
-        //     neoadj: string;
-        //     group: string;
-        //   };
-        //   await prisma.neoY.create({
-        //     data: {
-        //       serialNum: serial,
-        //       Neo: neoadj,
-        //       group: group,
-        //     },
-        //   });
-        // }
         // 기본 유저 생성
         for (const user of user_1.users) {
             const hashedPassword = yield bcryptjs_1.default.hash(user.password, 10); // 🔐 비밀번호 해싱

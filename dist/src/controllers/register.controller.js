@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletePatient = exports.updatePatient = exports.registerPatient = void 0;
 const client_1 = __importDefault(require("../../prisma/client"));
 const registerPatient = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { isReceived, patientId, patientName, isMale, group, droped, institution, birthday, operationDate, } = req.body;
+    const { isReceived, patientId, patientName, isMale, group, droped, institution, birthday, operationDate, serialNum, } = req.body;
     try {
         const newPatient = yield client_1.default.patientData.create({
             data: {
@@ -28,8 +28,22 @@ const registerPatient = (req, res) => __awaiter(void 0, void 0, void 0, function
                 institution,
                 birthday,
                 operationDate,
+                serialNum,
             },
         });
+        // 2. 그룹 테이블에서 serialNum 기준으로 used 업데이트
+        if (isReceived === "Y") {
+            yield client_1.default.neoY.updateMany({
+                where: { serialNum, used: false },
+                data: { used: true },
+            });
+        }
+        else if (isReceived === "N") {
+            yield client_1.default.neoN.updateMany({
+                where: { serialNum, used: false },
+                data: { used: true },
+            });
+        }
         return res.status(201).json({
             message: "Patient data registered successfully",
             patient: newPatient,
@@ -44,7 +58,7 @@ exports.registerPatient = registerPatient;
 // 수정
 const updatePatient = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { isReceived, patientId, patientName, isMale, droped, group, institution, birthday, operationDate, } = req.body;
+    const { isReceived, patientId, patientName, isMale, droped, group, institution, birthday, operationDate, serialNum, } = req.body;
     try {
         const updatedPatient = yield client_1.default.patientData.update({
             where: { patientId: id },
@@ -58,6 +72,7 @@ const updatePatient = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 institution,
                 birthday,
                 operationDate,
+                serialNum,
             },
         });
         return res.status(200).json({

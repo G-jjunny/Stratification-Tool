@@ -13,6 +13,7 @@ export const registerPatient = async (req: Request, res: Response) => {
     institution,
     birthday,
     operationDate,
+    serialNum,
   } = req.body;
 
   try {
@@ -27,8 +28,22 @@ export const registerPatient = async (req: Request, res: Response) => {
         institution,
         birthday,
         operationDate,
+        serialNum,
       },
     });
+
+    // 2. 그룹 테이블에서 serialNum 기준으로 used 업데이트
+    if (isReceived === "Y") {
+      await prisma.neoY.updateMany({
+        where: { serialNum, used: false },
+        data: { used: true },
+      });
+    } else if (isReceived === "N") {
+      await prisma.neoN.updateMany({
+        where: { serialNum, used: false },
+        data: { used: true },
+      });
+    }
 
     return res.status(201).json({
       message: "Patient data registered successfully",
@@ -53,6 +68,7 @@ export const updatePatient = async (req: Request, res: Response) => {
     institution,
     birthday,
     operationDate,
+    serialNum,
   } = req.body;
 
   try {
@@ -68,6 +84,7 @@ export const updatePatient = async (req: Request, res: Response) => {
         institution,
         birthday,
         operationDate,
+        serialNum,
       },
     });
 

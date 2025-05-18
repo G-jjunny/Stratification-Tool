@@ -65,6 +65,7 @@ const neoadjFromExcel = (fileName, model) => __awaiter(void 0, void 0, void 0, f
             serialNum: serial,
             Neo: neoadj,
             group: group,
+            used: false,
         };
         if (model === "neoY") {
             yield client_1.default.neoY.create({ data: record });
